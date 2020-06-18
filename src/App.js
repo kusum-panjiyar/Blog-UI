@@ -12,13 +12,13 @@ function App(props) {
          <BrowserRouter>
             <div>
              <Link to='/'>Home |</Link>
-             <Link to='/userlist'>User |</Link>
-             <Link to='/postlist'>Post</Link>
+             <Link to='/users'>User |</Link>
+             <Link to='/post'>Post</Link>
              
              <Route path='/' component={Home} exact={true} />
-             <Route path='/userlist' component={UserList} exact={true}/>
-             <Route path='/userslist/:userId' component={UserShow} />
-             <Route path='/postlist' component={PostList} exact={true}/>
+             <Route path='/users' component={UserList} exact={true}/>
+             <Route path='/users/:userId' component={UserShow} />
+             <Route path='/post' component={PostList} exact={true}/>
              <Route path='/post/:userId' component={PostShow} />
             </div>
         </BrowserRouter>

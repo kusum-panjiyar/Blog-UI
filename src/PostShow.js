@@ -7,7 +7,7 @@ class PostShow extends React.Component{
         super()
         this.state={
              user:{},
-             posts:[],
+             post:{},
              comments:[]
         }
     }
@@ -16,19 +16,22 @@ class PostShow extends React.Component{
     {
         
         const userId=this.props.match.params.userId
-        axios.get(`http://jsonplaceholder.typicode.com/users/${userId}`)
+       
+        axios.get(`http://jsonplaceholder.typicode.com/posts/${userId}`)
         .then(response=>{
-            const users=response.data
-            console.log(users)
-            this.setState({users})
-        })
-        axios.get(`http://jsonplaceholder.typicode.com/posts?id=${userId}`)
-        .then(response=>{
-            const posts=response.data
-            console.log(posts)
-            this.setState({posts})
-        })
+             const post=response.data
+             console.log(post)
+            this.setState({post})
 
+        axios.get(`http://jsonplaceholder.typicode.com/users/${post.userId}`)
+         .then(response=>{
+             const user=response.data
+             console.log(user)
+             this.setState({user})
+           
+        })    
+         })
+       
         axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${userId}`)
         .then(response=>{
             const comments=response.data
@@ -45,19 +48,11 @@ class PostShow extends React.Component{
         return(
             <div>
                 <h2>USER NAME:{this.state.user.name}</h2>
-                <h2>TITLE :-
-                    {
-                        this.state.posts.map(ele=>{
-                            return ele.title
-                        })
-                    }
+                <h2>TITLE: 
+                    {this.state.post.title}
                 </h2>
-                <h2>BODY:-
-                    {
-                        this.state.posts.map(ele=>{
-                            return ele.body
-                        })
-                    }
+                <h2>BODY:
+                    {this.state.post.body}
                 </h2>
                 <hr/>
                 <h2>Comments:</h2>
@@ -67,7 +62,8 @@ class PostShow extends React.Component{
                         return (<li key={i}>{ele.body}</li>)
                         })
                     }
-                </ul><hr/>
+                </ul><hr/>   
+                <Link to={`/users/${this.state.user.id}`}> more posts from users : {this.state.user.name}</Link>
             </div>
         )
     }
